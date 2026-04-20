@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth Intelligence Engine — Full Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#0a0a0a;--white:#f5f2ed;--teal:#1a6b5a;--teal-mid:#2d9b7f;--red:#c9392c;--gray:rgba(245,242,237,0.5);--border:rgba(245,242,237,0.08)}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'IBM Plex Sans',sans-serif;font-weight:300;line-height:1.6}
+a{color:var(--teal-mid);text-decoration:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-logo{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal-mid)}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,242,237,0.3);transition:color 0.2s}
+.nav-links a:hover{color:var(--teal-mid)}
+
+/* LAYOUT */
+.wrap{max-width:1000px;margin:0 auto;padding:0 48px}
+section{padding:80px 0}
+hr.div{border:none;border-top:1px solid var(--border)}
+
+/* HERO */
+.hero{padding:140px 0 80px;border-bottom:1px solid var(--border)}
+.hero-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:28px;display:flex;align-items:center;gap:10px}
+.hero-tag::before{content:'';display:block;width:28px;height:1px;background:var(--teal-mid)}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,68px);font-weight:400;line-height:1.08;letter-spacing:-0.02em;margin-bottom:28px}
+.hero h1 em{font-style:italic;color:var(--teal-mid)}
+.hero-lead{font-size:17px;color:rgba(245,242,237,0.55);max-width:580px;line-height:1.75;margin-bottom:40px}
+.hero-chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;border:1px solid rgba(245,242,237,0.15);border-radius:2px;padding:5px 12px;color:rgba(245,242,237,0.35)}
+
+/* SECTION LABEL */
+.s-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:36px;display:flex;align-items:center;gap:10px}
+.s-label::before{content:'';display:block;width:18px;height:1px;background:var(--teal-mid)}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:64px}
+.stat-cell{background:var(--black);padding:32px 24px}
+.stat-n{font-family:'Playfair Display',serif;font-size:44px;font-weight:400;line-height:1;margin-bottom:6px}
+.stat-n span{color:var(--teal-mid)}
+.stat-l{font-size:12px;color:rgba(245,242,237,0.35)}
+
+/* TABLE */
+.tbl-wrap{border:1px solid var(--border);overflow:hidden;margin-bottom:48px}
+table{width:100%;border-collapse:collapse}
+thead tr{background:rgba(245,242,237,0.02);border-bottom:1px solid var(--border)}
+th{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,242,237,0.25);padding:12px 18px;text-align:left;font-weight:400}
+td{padding:16px 18px;border-bottom:1px solid rgba(245,242,237,0.04);font-size:13px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr.champ td:first-child{color:var(--teal-mid)}
+tr:hover td{background:rgba(245,242,237,0.01)}
+
+.bw{display:flex;align-items:center;gap:8px}
+.bt{flex:1;height:3px;background:rgba(245,242,237,0.07);border-radius:2px;overflow:hidden;min-width:50px}
+.bf{height:100%;border-radius:2px}
+.bl{background:var(--teal-mid)}
+.bn{background:var(--red)}
+.bz{background:rgba(245,242,237,0.07)}
+.bp{font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:32px;text-align:right}
+.bpl{color:var(--teal-mid)}
+.bpz{color:rgba(245,242,237,0.2)}
+.bpn{color:var(--red)}
+
+.sig{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.05em;padding:3px 8px;border-radius:2px;white-space:nowrap}
+.sc{background:rgba(26,107,90,0.18);color:var(--teal-mid);border:1px solid rgba(45,155,127,0.25)}
+.sk{background:rgba(245,242,237,0.04);color:rgba(245,242,237,0.3);border:1px solid rgba(245,242,237,0.08)}
+
+/* INSIGHT */
+.insight{border-left:2px solid var(--teal-mid);padding:28px 36px;background:rgba(26,107,90,0.06);margin:48px 0}
+.ins-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:12px}
+.ins-txt{font-family:'Playfair Display',serif;font-size:19px;font-weight:400;font-style:italic;line-height:1.65;color:var(--white)}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px}
+.card{border:1px solid var(--border);padding:28px 32px}
+.card-title{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,242,237,0.4);margin-bottom:20px}
+.card p{font-size:13px;color:rgba(245,242,237,0.6);line-height:1.7;margin-bottom:10px}
+.card p:last-child{margin-bottom:0}
+
+/* WIN LOSS */
+.wl-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(245,242,237,0.04)}
+.wl-row:last-child{border-bottom:none}
+.wl-name{font-size:13px;color:rgba(245,242,237,0.7)}
+.wl-count{font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)}
+
+/* CAMPAIGN */
+.angle{border:1px solid var(--border);padding:28px 32px;margin-bottom:16px}
+.angle-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal-mid);letter-spacing:0.1em;margin-bottom:10px}
+.angle-hook{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--white);margin-bottom:14px;line-height:1.4}
+.angle-body{font-size:13px;color:rgba(245,242,237,0.55);line-height:1.75;margin-bottom:12px}
+.angle-evidence{font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(45,155,127,0.7);letter-spacing:0.06em}
+
+/* GAP */
+.gap-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:24px}
+.gap-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,242,237,0.3);margin-bottom:16px}
+.gr{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.grl{font-size:11px;color:rgba(245,242,237,0.4);width:110px;flex-shrink:0;text-align:right}
+.grt{flex:1;height:20px;background:rgba(245,242,237,0.04);border-radius:2px;overflow:hidden}
+.grf{height:100%;display:flex;align-items:center;padding-left:8px;font-family:'IBM Plex Mono',monospace;font-size:10px}
+.gap-note{background:rgba(26,107,90,0.1);border:1px solid rgba(45,155,127,0.2);padding:16px 20px;font-size:13px;color:rgba(245,242,237,0.6);line-height:1.7}
+
+/* HUBSPOT */
+.hs-num-row{display:flex;gap:40px;flex-wrap:wrap;margin-bottom:32px}
+.hs-num{border-left:2px solid rgba(245,242,237,0.1);padding-left:20px}
+.hs-n{font-family:'Playfair Display',serif;font-size:36px;color:var(--white);line-height:1;margin-bottom:4px}
+.hs-n span{color:var(--teal-mid)}
+.hs-l{font-size:12px;color:rgba(245,242,237,0.3)}
+
+/* SKILL */
+.skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-top:36px}
+.skill-cell{background:var(--black);padding:24px 28px}
+.sk-arr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--teal-mid);margin-bottom:6px}
+.sk-txt{font-size:13px;color:rgba(245,242,237,0.6);line-height:1.6}
+
+/* CTA */
+.cta{text-align:center;padding:64px 48px;border:1px solid var(--border);margin:80px 0}
+.cta h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:400;margin-bottom:14px}
+.cta p{font-size:14px;color:rgba(245,242,237,0.4);margin-bottom:36px;line-height:1.7}
+.btn{display:inline-block;background:var(--teal);color:var(--white);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:14px 36px;text-decoration:none;transition:background 0.2s}
+.btn:hover{background:var(--teal-mid)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:28px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(245,242,237,0.2)}
+
+@media(max-width:700px){
+  .wrap{padding:0 24px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .two-col,.gap-grid,.skill-grid{grid-template-columns:1fr}
+  nav{padding:0 24px}
+  .nav-links{display:none}
+  .cta{padding:40px 24px;margin:48px 0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">Growth Intelligence Engine</span>
+  <div class="nav-links">
+    <a href="#gong">Gong analysis</a>
+    <a href="#hubspot">HubSpot analysis</a>
+    <a href="#skill">The Skill</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-tag">Full Report — Two Case Studies</p>
+  <h1>What if your best customers<br>are <em>invisible</em> to your<br>marketing team?</h1>
+  <p class="hero-lead">I built a Claude Skill that finds ICP Drift automatically. I ran it on Gong and HubSpot. Both times, the same pattern. Here's everything the data found.</p>
+  <div class="hero-chips">
+    <span class="chip">300+ reviews — Gong</span>
+    <span class="chip">87 reviews — HubSpot</span>
+    <span class="chip">G2 · TrustRadius · Capterra · Reddit</span>
+    <span class="chip">Competitor reviews analyzed</span>
+    <span class="chip">April 2026</span>
+  </div>
+</div>
+
+<!-- GONG -->
+<section id="gong">
+  <p class="s-label">Case study 01 — Gong.io</p>
+
+  <div class="stats-grid">
+    <div class="stat-cell"><p class="stat-n">300<span>+</span></p><p class="stat-l">Reviews analyzed</p></div>
+    <div class="stat-cell"><p class="stat-n">68<span>%</span></p><p class="stat-l">Peak love rate — AMs</p></div>
+    <div class="stat-cell"><p class="stat-n">0<span>%</span></p><p class="stat-l">Negativity — top 3 segments</p></div>
+    <div class="stat-cell"><p class="stat-n">5</p><p class="stat-l">Sources scraped automatically</p></div>
+  </div>
+
+  <p class="s-label">Module 2 — ICP drift by role</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Role</th><th>Reviews</th><th>Love rate</th><th>Negativity</th><th>Signal</th></tr></thead>
+      <tbody>
+        <tr class="champ"><td>RevOps / Enablement</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">11</td><td><div class="bw"><div class="bt"><div class="bf bl" style="width:72%"></div></div><span class="bp bpl">72%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bz" style="width:0%"></div></div><span class="bp bpz">0%</span></div></td><td><span class="sig sc">Underserved champion</span></td></tr>
+        <tr class="champ"><td>Account Managers</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">25</td><td><div class="bw"><div class="bt"><div class="bf bl" style="width:68%"></div></div><span class="bp bpl">68%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bz" style="width:0%"></div></div><span class="bp bpz">0%</span></div></td><td><span class="sig sc">Underserved champion</span></td></tr>
+        <tr class="champ"><td>Customer Success</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">36</td><td><div class="bw"><div class="bt"><div class="bf bl" style="width:58%"></div></div><span class="bp bpl">58%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bz" style="width:0%"></div></div><span class="bp bpz">0%</span></div></td><td><span class="sig sc">Underserved champion</span></td></tr>
+        <tr><td>Account Executives</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">57</td><td><div class="bw"><div class="bt"><div class="bf bl" style="width:55%"></div></div><span class="bp bpl">55%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bn" style="width:8%"></div></div><span class="bp bpn">8%</span></div></td><td><span class="sig sk">Primary target</span></td></tr>
+        <tr><td>Sales Leadership</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">34</td><td><div class="bw"><div class="bt"><div class="bf bl" style="width:52%"></div></div><span class="bp bpl">52%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bn" style="width:6%"></div></div><span class="bp bpn">6%</span></div></td><td><span class="sig sk">Primary target</span></td></tr>
+        <tr><td>Non-Sales (Mktg/Product/Eng)</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">20</td><td><div class="bw"><div class="bt"><div class="bf bl" style="width:45%"></div></div><span class="bp bpl">45%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bn" style="width:5%"></div></div><span class="bp bpn">5%</span></div></td><td><span class="sig sk">Hidden power user</span></td></tr>
+        <tr><td>SDR / BDR</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">18</td><td><div class="bw"><div class="bt"><div class="bf bl" style="width:40%"></div></div><span class="bp bpl">40%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bz" style="width:0%"></div></div><span class="bp bpz">0%</span></div></td><td><span class="sig sk">Neutral</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="s-label">Marketing coverage vs. review reality</p>
+  <div class="gap-grid">
+    <div>
+      <p class="gap-lbl">Marketing attention (est.)</p>
+      <div class="gr"><span class="grl">Sales / AEs</span><div class="grt"><div class="grf" style="width:85%;background:rgba(255,255,255,0.1)"><span style="color:rgba(245,242,237,0.5)">~85%</span></div></div></div>
+      <div class="gr"><span class="grl">CSM / AM</span><div class="grt"><div class="grf" style="width:12%;background:rgba(255,255,255,0.06)"><span style="color:rgba(245,242,237,0.3);font-size:10px">12%</span></div></div></div>
+      <div class="gr"><span class="grl">RevOps</span><div class="grt"><div class="grf" style="width:3%;background:rgba(255,255,255,0.03)"></div></div></div>
+    </div>
+    <div>
+      <p class="gap-lbl">Love rate from reviews</p>
+      <div class="gr"><span class="grl">RevOps</span><div class="grt"><div class="grf" style="width:72%;background:rgba(45,155,127,0.5)"><span style="color:#e8f4f0">72%</span></div></div></div>
+      <div class="gr"><span class="grl">AM</span><div class="grt"><div class="grf" style="width:68%;background:rgba(45,155,127,0.45)"><span style="color:#e8f4f0">68%</span></div></div></div>
+      <div class="gr"><span class="grl">CSM</span><div class="grt"><div class="grf" style="width:58%;background:rgba(45,155,127,0.35)"><span style="color:#e8f4f0">58%</span></div></div></div>
+      <div class="gr"><span class="grl">Sales / AEs</span><div class="grt"><div class="grf" style="width:54%;background:rgba(45,155,127,0.2)"><span style="color:rgba(245,242,237,0.5);font-size:10px">54%</span></div></div></div>
+    </div>
+  </div>
+  <div class="gap-note">The three segments with the highest love rate and zero negative reviews receive almost no marketing attention. The segment with the most marketing attention has the lowest love rate and the highest negativity rate across all roles.</div>
+
+  <div class="insight">
+    <p class="ins-lbl">Primary insight — Gong</p>
+    <p class="ins-txt">"Gong has two user populations. The Accidental Champions — CSMs, AMs, RevOps — discovered the product through their Sales colleagues and became its biggest fans. Zero negative reviews. Love rate 58–72%. Nobody is marketing to them. The Intended Users — AEs and Sales Leadership — get value but hit friction. Gong spends ~85% of its marketing on the segment that loves it least."</p>
+  </div>
+
+  <p class="s-label">Module 1 — Win/Loss signals</p>
+  <div class="two-col">
+    <div class="card">
+      <p class="card-title">Why people leave</p>
+      <div class="wl-row"><span class="wl-name">Consolidation — "can't justify separate tool"</span><span class="wl-count">4 confirmed</span></div>
+      <div class="wl-row"><span class="wl-name">Reliability — agent doesn't join calls</span><span class="wl-count">17 reviews (18%)</span></div>
+      <div class="wl-row"><span class="wl-name">Salesforce sync delay</span><span class="wl-count">8+ independent mentions</span></div>
+      <div class="wl-row"><span class="wl-name">AI summaries weaker than GPT</span><span class="wl-count">6 reviews</span></div>
+    </div>
+    <div class="card">
+      <p class="card-title">Competitive signals</p>
+      <div class="wl-row"><span class="wl-name">Salesloft — integration blocked deliberately</span><span class="wl-count">Forced choice</span></div>
+      <div class="wl-row"><span class="wl-name">Salesloft + Clari merger</span><span class="wl-count">Dec 2025 — window open</span></div>
+      <div class="wl-row"><span class="wl-name">Evangelists — would never leave</span><span class="wl-count">40+ reviews (~40%)</span></div>
+      <div class="wl-row"><span class="wl-name">Gong loses to consolidation, not competitors</span><span class="wl-count">Core finding</span></div>
+    </div>
+  </div>
+
+  <p class="s-label">Module 3 — Campaign brief (CSMs + AMs)</p>
+  <div class="angle">
+    <p class="angle-num">Angle 01 — Account handoff</p>
+    <p class="angle-hook">"You just inherited 40 accounts. You have no history."</p>
+    <p class="angle-body">The most dangerous moment in CS is a rep transition. Every promise ever made, every concern ever raised, every relationship ever built — gone, unless it's in Gong. CSMs who use Gong for account handoffs describe it as institutional memory: "I can ask Gong what were the reasons for buying our solution." Nobody is running this message.</p>
+    <p class="angle-evidence">Evidence: 20+ reviews explicitly describe account handoff as primary use case across TrustRadius and G2</p>
+  </div>
+  <div class="angle">
+    <p class="angle-num">Angle 02 — Institutional memory</p>
+    <p class="angle-hook">"When your best rep leaves, what stays?"</p>
+    <p class="angle-body">Tools depreciate. Salesforce data goes stale. Outreach sequences get ignored. Gong is the only tool that gets more valuable every day — because every call becomes intelligence your next hire inherits tomorrow. Tribal knowledge used to take years to accumulate. Gong shortened that.</p>
+    <p class="angle-evidence">Evidence: TrustRadius: "Tribal knowledge used to take years. Gong shortened that." Multiple reviews on ramping in 2 weeks vs. months</p>
+  </div>
+  <div class="angle">
+    <p class="angle-num">Angle 03 — The 40% revenue</p>
+    <p class="angle-hook">"40% of your revenue lives in conversations your CS team is having right now."</p>
+    <p class="angle-body">Your Sales team closes the first deal. But expansion, renewal, and NRR live in post-sale conversations. Most CS teams manage accounts on memory and meeting notes. The ones hitting 120% NRR run on Gong — and can prove what was promised to every customer.</p>
+    <p class="angle-evidence">Evidence: Confirmed by Gong's own LinkedIn content + CSM reviews on expansion signal capture</p>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- HUBSPOT -->
+<section id="hubspot">
+  <p class="s-label">Case study 02 — HubSpot CRM</p>
+  <p style="font-size:15px;color:rgba(245,242,237,0.45);margin-bottom:40px;line-height:1.7;max-width:560px">Same Skill. 4 minutes. 87 reviews across Capterra, TrustRadius, and Reddit. The same ICP Drift pattern — different company, different category.</p>
+
+  <div class="hs-num-row">
+    <div class="hs-num"><p class="hs-n">1.3<span>%</span></p><p class="hs-l">"Inbound" mentions in 2025 (down from 12% in 2020)</p></div>
+    <div class="hs-num"><p class="hs-n">2<span>×</span></p><p class="hs-l">"CRM / automation / onboarding" growth since 2020</p></div>
+    <div class="hs-num"><p class="hs-n">31<span>%</span></p><p class="hs-l">Reviews cite pricing as #1 pain</p></div>
+  </div>
+
+  <div class="tbl-wrap" style="margin-bottom:48px">
+    <table>
+      <thead><tr><th>Role</th><th>Reviews</th><th>Love rate</th><th>Negativity</th><th>Signal</th></tr></thead>
+      <tbody>
+        <tr class="champ"><td>CS / Support</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">3</td><td><div class="bw"><div class="bt"><div class="bf bl" style="width:33%"></div></div><span class="bp bpl">33%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bz" style="width:0%"></div></div><span class="bp bpz">0%</span></div></td><td><span class="sig sc">Satisfied core</span></td></tr>
+        <tr class="champ"><td>RevOps / Ops</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">4</td><td><div class="bw"><div class="bt"><div class="bf bl" style="width:25%"></div></div><span class="bp bpl">25%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bz" style="width:0%"></div></div><span class="bp bpz">0%</span></div></td><td><span class="sig sc">Watch — underserved</span></td></tr>
+        <tr><td>C-Suite</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">12</td><td><div class="bw"><div class="bt"><div class="bf bl" style="width:17%"></div></div><span class="bp bpl">17%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bn" style="width:8%"></div></div><span class="bp bpn">8%</span></div></td><td><span class="sig sk">Buyer — mixed</span></td></tr>
+        <tr><td>Sales (AE/SDR/BDM)</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">11</td><td><div class="bw"><div class="bt"><div class="bf bz" style="width:0%"></div></div><span class="bp bpz">0%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bz" style="width:0%"></div></div><span class="bp bpz">0%</span></div></td><td><span class="sig sk">Functional user</span></td></tr>
+        <tr><td>Marketing</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.3)">5</td><td><div class="bw"><div class="bt"><div class="bf bz" style="width:0%"></div></div><span class="bp bpz">0%</span></div></td><td><div class="bw"><div class="bt"><div class="bf bn" style="width:20%"></div></div><span class="bp bpn">20%</span></div></td><td><span class="sig" style="background:rgba(201,57,44,0.1);color:#c9392c;border:1px solid rgba(201,57,44,0.2)">At-risk</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="s-label">Win/Loss — HubSpot</p>
+  <div class="two-col">
+    <div class="card">
+      <p class="card-title">Pricing pain breakdown</p>
+      <div class="wl-row"><span class="wl-name">Pricing increases as you scale</span><span class="wl-count">~12 reviews</span></div>
+      <div class="wl-row"><span class="wl-name">Features locked behind paid tiers</span><span class="wl-count">~9 reviews</span></div>
+      <div class="wl-row"><span class="wl-name">Opaque / unpredictable billing</span><span class="wl-count">~4 reviews</span></div>
+      <div class="wl-row"><span class="wl-name">Lock-in / hard to downsize</span><span class="wl-count">~2 reviews</span></div>
+    </div>
+    <div class="card">
+      <p class="card-title">Top alternatives considered</p>
+      <div class="wl-row"><span class="wl-name">Salesforce</span><span class="wl-count">15 mentions</span></div>
+      <div class="wl-row"><span class="wl-name">Zoho CRM</span><span class="wl-count">10 mentions</span></div>
+      <div class="wl-row"><span class="wl-name">Pipedrive</span><span class="wl-count">8 mentions</span></div>
+      <div class="wl-row"><span class="wl-name">monday CRM</span><span class="wl-count">4 mentions</span></div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <p class="ins-lbl">Primary insight — HubSpot</p>
+    <p class="ins-txt">"HubSpot built its brand on inbound marketing. But between 2020 and 2025, the word 'inbound' dropped from 12% to 1.3% of all HubSpot-related conversation. The fastest-growing buyer segment today is RevOps teams at Series A/B companies who need to unify three GTM motions on one platform. HubSpot's marketing still speaks to the 2015 Marketing Director. The 2026 buyer is someone else entirely — and nobody is talking to them."</p>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- SKILL -->
+<section id="skill">
+  <p class="s-label">The Growth Intelligence Skill</p>
+  <p style="font-size:16px;color:rgba(245,242,237,0.5);max-width:540px;line-height:1.75;margin-bottom:40px">A Claude Skill that runs this full analysis automatically on any B2B SaaS company. Connected to Apify for real-time review scraping.</p>
+
+  <div class="skill-grid">
+    <div class="skill-cell"><p class="sk-arr">→</p><p class="sk-txt">Scrapes Capterra, TrustRadius, G2, and Reddit automatically via Apify MCP</p></div>
+    <div class="skill-cell"><p class="sk-arr">→</p><p class="sk-txt">Calculates Love Rate and Negativity Rate by role across all sources</p></div>
+    <div class="skill-cell"><p class="sk-arr">→</p><p class="sk-txt">Identifies ICP Drift — who loves the product vs. who gets the marketing</p></div>
+    <div class="skill-cell"><p class="sk-arr">→</p><p class="sk-txt">Surfaces competitive switching signals from alternativesConsidered data</p></div>
+    <div class="skill-cell"><p class="sk-arr">→</p><p class="sk-txt">Generates a data-backed campaign brief with 3 ad angles per segment</p></div>
+    <div class="skill-cell"><p class="sk-arr">→</p><p class="sk-txt">Bottom-up adoption recommendation when data supports it — not by default</p></div>
+  </div>
+
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,242,237,0.25);margin-top:20px">Full analysis of any B2B SaaS company · Under $5 in scraping costs · SKILL.md available on request</p>
+</section>
+
+<div class="cta">
+  <h2>Want the Skill?</h2>
+  <p>DM me on LinkedIn and I'll send the SKILL.md file directly.<br>Free to use, adapt, and build on.</p>
+  <a href="https://www.linkedin.com/in/" class="btn">DM on LinkedIn →</a>
+</div>
+
+<footer>
+  <span>Growth Intelligence Engine · Built by [Your Name]</span>
+  <span>Claude + Apify · April 2026</span>
+</footer>
+
+</div>
+</body>
+</html>
